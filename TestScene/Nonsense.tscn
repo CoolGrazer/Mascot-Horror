@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://bfh4jqcg0ycyu"]
+
+[ext_resource type="Texture2D" uid="uid://bxmlog5wcij6d" path="res://icon.svg" id="1_ld5h6"]
+[ext_resource type="Script" uid="uid://b526rkpcn0pl8" path="res://TestScene/TestMovementScript.gd" id="1_p6uyd"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p6uyd"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_g50mx"]
+sky_material = SubResource("ProceduralSkyMaterial_p6uyd")
+
+[sub_resource type="Environment" id="Environment_qe4a0"]
+background_mode = 2
+sky = SubResource("Sky_g50mx")
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_n5fqs"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_p6uyd"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n5fqs"]
+
+[node name="Nonsense" type="Node3D" unique_id=701832051]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=683730418]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1517029193]
+environment = SubResource("Environment_qe4a0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1112826024]
+transform = Transform3D(9, 0, 0, 0, 9, 0, 0, 0, 9, 0, 0, 0)
+mesh = SubResource("PlaneMesh_n5fqs")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1156006957]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=2061103743]
+shape = SubResource("ConcavePolygonShape3D_p6uyd")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1045673813]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.67104983, 0)
+script = ExtResource("1_p6uyd")
+jump_height = 4.0
+
+[node name="Sprite3D" type="Sprite3D" parent="CharacterBody3D" unique_id=458579120]
+pixel_size = 0.008
+transparent = false
+texture = ExtResource("1_ld5h6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=20265909]
+shape = SubResource("BoxShape3D_n5fqs")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=2008765799]
+transform = Transform3D(1, 0, 0, 0, 0.6519391, 0.75827134, 0, -0.75827134, 0.6519391, 0, 1.9286082, 2.610023)
+current = true
+fov = 103.0
